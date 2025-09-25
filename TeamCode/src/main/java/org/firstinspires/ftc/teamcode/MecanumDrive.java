@@ -1,8 +1,8 @@
 /*
 USEFUL PORTS AND IP ADDRs FOR THE ROBOT
 
-192.168.43.1 - Robot IP
-192.168.43.1:8080 - Logs
+192.168.43.1 - Control Hub IP
+192.168.43.1:8080 - CH server. Used in things such as OnBotJava and Blocks.
 192.168.43.1:8080/dash - Dashboard
 
 COMMON ADB COMMANDS

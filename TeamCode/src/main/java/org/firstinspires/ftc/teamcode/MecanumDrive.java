@@ -9,9 +9,9 @@ COMMON ADB COMMANDS
 adb devices - list devices
 adb connect 192.168.43.1 - connect to device
 adb disconnect 192.168.43.1 - disconnect from device, important you do this so it doesn't bug out.
-adb shell - enter devices shell
+adb shell - enter device's shell
 adb kill-server - kill server, use if it is being weird
-scrcpy - view adb devices display (requires installation of scrcpy)
+scrcpy - view adb devices display (requires installation of scrcpy on your PC)
 su - switch to root (in adb shell)
 adb install /home/<username>/Downloads/block-blast.apkm - install block blast
 */

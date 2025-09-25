@@ -1,3 +1,19 @@
+/*
+USEFUL PORTS AND IP ADDRs FOR THE ROBOT
+
+192.168.43.1 - Robot IP
+192.168.43.1:8080 - Logs
+192.168.43.1:8080/dash - Dashboard
+
+COMMON ADB COMMANDS
+adb devices - list devices
+adb connect 192.168.43.1 - connect to device
+adb shell - enter devices shell
+adb kill-server - kill server, use if it is being weird
+scrcpy - view adb devices display (requires installation of scrcpy)
+su - switch to root (in adb shell)
+adb install /home/<username>/Downloads/block-blast.apkm - install block blast
+*/
 package org.firstinspires.ftc.teamcode;
 
 import androidx.annotation.NonNull;

@@ -8,6 +8,7 @@ USEFUL PORTS AND IP ADDRs FOR THE ROBOT
 COMMON ADB COMMANDS
 adb devices - list devices
 adb connect 192.168.43.1 - connect to device
+adb disconnect 192.168.43.1 - disconnect from device, important you do this so it doesn't bug out.
 adb shell - enter devices shell
 adb kill-server - kill server, use if it is being weird
 scrcpy - view adb devices display (requires installation of scrcpy)

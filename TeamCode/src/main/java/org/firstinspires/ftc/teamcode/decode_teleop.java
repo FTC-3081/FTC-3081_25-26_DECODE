@@ -37,6 +37,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 /*
@@ -95,6 +96,9 @@ public class decode_teleop extends LinearOpMode {
     private DcMotor frontRightDrive = null;
     private DcMotor backRightDrive = null;
 
+    private DcMotor intakeTop = null;
+
+
     @Override
     public void runOpMode() {
         telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
@@ -106,6 +110,7 @@ public class decode_teleop extends LinearOpMode {
         backLeftDrive = hardwareMap.get(DcMotor.class, "leftBack");
         frontRightDrive = hardwareMap.get(DcMotor.class, "rightFront");
         backRightDrive = hardwareMap.get(DcMotor.class, "rightBack");
+        intakeTop = hardwareMap.get(DcMotor.class, "rightBack");
 
         // ########################################################################################
         // !!!            IMPORTANT Drive Information. Test your motor directions.            !!!!!
@@ -122,6 +127,8 @@ public class decode_teleop extends LinearOpMode {
         frontRightDrive.setDirection(DcMotor.Direction.FORWARD);
         backRightDrive.setDirection(DcMotor.Direction.FORWARD);
 
+        intakeTop.setDirection(DcMotor.Direction.FORWARD);
+
         // Wait for the game to start (driver presses START)
         telemetry.addData("Status", "Initialized");
         telemetry.update();
@@ -136,7 +143,8 @@ public class decode_teleop extends LinearOpMode {
             // POV Mode uses left joystick to go forward & strafe, and right joystick to rotate.
             double axial   = -gamepad1.left_stick_y;  // Note: pushing stick forward gives negative value
             double lateral =  gamepad1.left_stick_x;
-            double yaw     =  gamepad1.right_stick_x + (.7 * gamepad1.right_trigger) - (.7* gamepad1.left_trigger);
+            double yaw     =  gamepad1.right_stick_x;
+            double IntakePower = gamepad1.right_trigger;
 
             // Combine the joystick requests for each axis-motion to determine each wheel's power.
             // Set up a variable for each drive wheel to save the power level for telemetry.
@@ -144,6 +152,7 @@ public class decode_teleop extends LinearOpMode {
             double frontRightPower = axial - lateral - yaw;
             double backLeftPower   = axial - lateral + yaw;
             double backRightPower  = axial + lateral - yaw;
+            double intakeTop = IntakePower;
 
             // Normalize the values so no wheel power exceeds 100%
             // This ensures that the robot maintains the desired motion.

@@ -110,7 +110,7 @@ public class decode_teleop extends LinearOpMode {
         backLeftDrive = hardwareMap.get(DcMotor.class, "leftBack");
         frontRightDrive = hardwareMap.get(DcMotor.class, "rightFront");
         backRightDrive = hardwareMap.get(DcMotor.class, "rightBack");
-        intakeTop = hardwareMap.get(DcMotor.class, "rightBack");
+        intakeTop = hardwareMap.get(DcMotor.class, "intakeTop");
 
         // ########################################################################################
         // !!!            IMPORTANT Drive Information. Test your motor directions.            !!!!!
@@ -152,7 +152,9 @@ public class decode_teleop extends LinearOpMode {
             double frontRightPower = axial - lateral - yaw;
             double backLeftPower   = axial - lateral + yaw;
             double backRightPower  = axial + lateral - yaw;
-            double intakeTop = IntakePower;
+
+            //apply modifications to intake power here
+            double intakeTopPower = IntakePower;
 
             // Normalize the values so no wheel power exceeds 100%
             // This ensures that the robot maintains the desired motion.
@@ -189,6 +191,7 @@ public class decode_teleop extends LinearOpMode {
             frontRightDrive.setPower(frontRightPower);
             backLeftDrive.setPower(backLeftPower);
             backRightDrive.setPower(backRightPower);
+            intakeTop.setPower(intakeTopPower);
 
             // Show the elapsed game time and wheel power.
             telemetry.addData("Status", "Run Time: " + runtime.toString());

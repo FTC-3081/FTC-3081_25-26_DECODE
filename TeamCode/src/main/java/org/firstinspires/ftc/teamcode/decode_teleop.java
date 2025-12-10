@@ -99,6 +99,9 @@ public class decode_teleop extends LinearOpMode {
     private DcMotor intakeTop = null;
 
 
+    //goofy goober code
+
+
     @Override
     public void runOpMode() {
         telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());

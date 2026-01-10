@@ -87,7 +87,7 @@ class MultipleTelemetryExampleOpMode extends OpMode {
 */
 @TeleOp(name="decode teleop", group="Linear OpMode")
 
-public class decode_teleop extends LinearOpMode {
+public class motortest extends LinearOpMode {
 
     // Declare OpMode members for each of the 4 motors.
     private ElapsedTime runtime = new ElapsedTime();
@@ -137,10 +137,10 @@ public class decode_teleop extends LinearOpMode {
         frontRightDrive.setDirection(DcMotor.Direction.FORWARD);
         backRightDrive.setDirection(DcMotor.Direction.FORWARD);
 
-        intakeTop.setDirection(DcMotor.Direction.REVERSE);
+        intakeTop.setDirection(DcMotor.Direction.FORWARD);
         //adjust as needed
-        intakeLeft.setDirection(DcMotor.Direction.REVERSE);
-        intakeRight.setDirection(DcMotor.Direction.FORWARD);
+        intakeLeft.setDirection(DcMotor.Direction.FORWARD);
+        intakeRight.setDirection(DcMotor.Direction.REVERSE);
 
         // Wait for the game to start (driver presses START)
         telemetry.addData("Status", "Initialized");
@@ -161,12 +161,11 @@ public class decode_teleop extends LinearOpMode {
 
             // Combine the joystick requests for each axis-motion to determine each wheel's power.
             // Set up a variable for each drive wheel to save the power level for telemetry.
-            double frontLeftPower  = axial + lateral + yaw;
-            double frontRightPower = axial - lateral - yaw;
-            double backLeftPower   = axial - lateral + yaw;
-            double backRightPower  = axial + lateral - yaw;
+            double frontLeftPower  = gamepad1.left_trigger;
+            double frontRightPower = gamepad1.right_trigger;
+            double backLeftPower   = gamepad1.right_stick_x;
+            double backRightPower  = gamepad1.left_stick_x;
 
-            double intakePower = ((gamepad1.right_bumper) ? 1.0 : 0.0) + ((gamepad1.left_bumper) ? (-1.0) : 0.0);
 
 
 
@@ -208,9 +207,6 @@ public class decode_teleop extends LinearOpMode {
             backRightDrive.setPower(backRightPower);
 
             //something something ternary operator
-            intakeLeft.setPower(intakePower);
-            intakeRight.setPower(intakePower);
-            intakeTop.setPower(gamepad1.right_trigger);
 
 
 
@@ -220,7 +216,6 @@ public class decode_teleop extends LinearOpMode {
             telemetry.addData("Front left/Right", "%4.2f, %4.2f", frontLeftPower, frontRightPower);
             telemetry.addData("Back  left/Right", "%4.2f, %4.2f", backLeftPower, backRightPower);
             telemetry.addData("Funny Number", 67);
-            telemetry.addData("intakePower",intakePower);
             telemetry.update();
 
 

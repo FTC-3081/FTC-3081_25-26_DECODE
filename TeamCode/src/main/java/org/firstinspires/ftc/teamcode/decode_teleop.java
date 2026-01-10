@@ -166,7 +166,7 @@ public class decode_teleop extends LinearOpMode {
             double backLeftPower   = axial - lateral + yaw;
             double backRightPower  = axial + lateral - yaw;
 
-            double intakePower = ((gamepad1.right_bumper) ? 1.0 : 0.0) + ((gamepad1.left_bumper) ? (-1.0) : 0.0);
+            double intakePower = (gamepad1.right_trigger - gamepad1.left_trigger);
 
 
 
@@ -210,7 +210,7 @@ public class decode_teleop extends LinearOpMode {
             //something something ternary operator
             intakeLeft.setPower(intakePower);
             intakeRight.setPower(intakePower);
-            intakeTop.setPower(gamepad1.right_trigger);
+            intakeTop.setPower((gamepad1.right_bumper) ? 1.0 : 0.0);
 
 
 

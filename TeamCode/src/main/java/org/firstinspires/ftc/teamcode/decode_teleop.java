@@ -95,6 +95,8 @@ public class decode_teleop extends LinearOpMode {
     private DcMotor backLeftDrive = null;
     private DcMotor frontRightDrive = null;
     private DcMotor backRightDrive = null;
+    private DcMotor intakeLeft = null;
+    private DcMotor intakeRight = null;
 
     private DcMotor intakeTop = null;
 
@@ -113,7 +115,12 @@ public class decode_teleop extends LinearOpMode {
         backLeftDrive = hardwareMap.get(DcMotor.class, "leftBack");
         frontRightDrive = hardwareMap.get(DcMotor.class, "rightFront");
         backRightDrive = hardwareMap.get(DcMotor.class, "rightBack");
+
         intakeTop = hardwareMap.get(DcMotor.class, "intakeTop");
+        intakeLeft = hardwareMap.get(DcMotor.class, "intakeLeft");
+        intakeRight = hardwareMap.get(DcMotor.class, "intakeRight");
+
+
 
         // ########################################################################################
         // !!!            IMPORTANT Drive Information. Test your motor directions.            !!!!!
@@ -131,6 +138,9 @@ public class decode_teleop extends LinearOpMode {
         backRightDrive.setDirection(DcMotor.Direction.FORWARD);
 
         intakeTop.setDirection(DcMotor.Direction.FORWARD);
+        //adjust as needed
+        intakeLeft.setDirection(DcMotor.Direction.FORWARD);
+        intakeRight.setDirection(DcMotor.Direction.REVERSE);
 
         // Wait for the game to start (driver presses START)
         telemetry.addData("Status", "Initialized");
@@ -147,7 +157,7 @@ public class decode_teleop extends LinearOpMode {
             double axial   = -gamepad1.left_stick_y;  // Note: pushing stick forward gives negative value
             double lateral =  gamepad1.left_stick_x;
             double yaw     =  gamepad1.right_stick_x;
-            double IntakePower = gamepad1.right_trigger;
+            //boolean  = gamepad1.right_bumper;
 
             // Combine the joystick requests for each axis-motion to determine each wheel's power.
             // Set up a variable for each drive wheel to save the power level for telemetry.
@@ -156,8 +166,10 @@ public class decode_teleop extends LinearOpMode {
             double backLeftPower   = axial - lateral + yaw;
             double backRightPower  = axial + lateral - yaw;
 
-            //apply modifications to intake power here
-            double intakeTopPower = IntakePower;
+            double intakePower = ((gamepad1.right_bumper) ? 1.0 : 0.0) + ((gamepad1.left_bumper) ? (-1.0) : 0.0);
+
+
+
 
             // Normalize the values so no wheel power exceeds 100%
             // This ensures that the robot maintains the desired motion.
@@ -194,13 +206,20 @@ public class decode_teleop extends LinearOpMode {
             frontRightDrive.setPower(frontRightPower);
             backLeftDrive.setPower(backLeftPower);
             backRightDrive.setPower(backRightPower);
-            intakeTop.setPower(intakeTopPower);
+
+            //something something ternary operator
+            intakeLeft.setPower(intakePower);
+            intakeRight.setPower(intakePower);
+
+
+
 
             // Show the elapsed game time and wheel power.
             telemetry.addData("Status", "Run Time: " + runtime.toString());
             telemetry.addData("Front left/Right", "%4.2f, %4.2f", frontLeftPower, frontRightPower);
             telemetry.addData("Back  left/Right", "%4.2f, %4.2f", backLeftPower, backRightPower);
             telemetry.addData("Funny Number", 67);
+            telemetry.addData("intakePower",intakePower);
             telemetry.update();
 
 

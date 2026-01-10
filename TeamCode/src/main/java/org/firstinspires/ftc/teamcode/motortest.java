@@ -85,7 +85,7 @@ class MultipleTelemetryExampleOpMode extends OpMode {
     // ...
 }
 */
-@TeleOp(name="decode teleop", group="Linear OpMode")
+@TeleOp(name="motortest", group="Linear OpMode")
 
 public class motortest extends LinearOpMode {
 

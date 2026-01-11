@@ -166,7 +166,7 @@ public class decode_teleop extends LinearOpMode {
             double backLeftPower   = axial - lateral + yaw;
             double backRightPower  = axial + lateral - yaw;
 
-            double intakePower = (gamepad1.right_trigger - gamepad1.left_trigger);
+            double intakePower = (gamepad1.right_trigger - (gamepad1.left_trigger * .5));
 
 
 

@@ -210,7 +210,8 @@ public class decode_teleop extends LinearOpMode {
             //something something ternary operator
             intakeLeft.setPower(intakePower);
             intakeRight.setPower(intakePower);
-            intakeTop.setPower((gamepad1.right_bumper) ? 1.0 : 0.0);
+            intakeTop.setPower(((gamepad1.right_bumper) ? 1.0 : 0.0) - (gamepad1.left_bumper ? -0.5 : 0.0));
+
 
 
 

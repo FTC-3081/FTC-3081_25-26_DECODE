@@ -29,15 +29,11 @@
 
 package org.firstinspires.ftc.teamcode;
 
-import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.telemetry;
-
 import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 /*
@@ -98,7 +94,7 @@ public class decode_teleop extends LinearOpMode {
     private DcMotor intakeLeft = null;
     private DcMotor intakeRight = null;
 
-    private DcMotor intakeTop = null;
+    private DcMotor outtakeMotor = null;
 
 
     //goofy goober code
@@ -116,7 +112,7 @@ public class decode_teleop extends LinearOpMode {
         frontRightDrive = hardwareMap.get(DcMotor.class, "rightFront");
         backRightDrive = hardwareMap.get(DcMotor.class, "rightBack");
 
-        intakeTop = hardwareMap.get(DcMotor.class, "intakeTop");
+        outtakeMotor = hardwareMap.get(DcMotor.class, "intakeTop");
         intakeLeft = hardwareMap.get(DcMotor.class, "intakeLeft");
         intakeRight = hardwareMap.get(DcMotor.class, "intakeRight");
 
@@ -137,7 +133,7 @@ public class decode_teleop extends LinearOpMode {
         frontRightDrive.setDirection(DcMotor.Direction.FORWARD);
         backRightDrive.setDirection(DcMotor.Direction.FORWARD);
 
-        intakeTop.setDirection(DcMotor.Direction.REVERSE);
+        outtakeMotor.setDirection(DcMotor.Direction.REVERSE);
         //adjust as needed
         intakeLeft.setDirection(DcMotor.Direction.REVERSE);
         intakeRight.setDirection(DcMotor.Direction.FORWARD);
@@ -210,7 +206,16 @@ public class decode_teleop extends LinearOpMode {
             //something something ternary operator
             intakeLeft.setPower(intakePower);
             intakeRight.setPower(intakePower);
-            intakeTop.setPower(((gamepad1.right_bumper) ? 1.0 : 0.0) - (gamepad1.left_bumper ? -0.5 : 0.0));
+            //intakeTop.setPower(((gamepad1.right_bumper) ? 1.0 : 0.0) + (gamepad1.left_bumper ? -0.5 : 0.0));
+
+            //Prototype outtake code.
+            if (gamepad1.right_bumper) {
+                outtakeMotor.setPower(1.0);  // Priority: If Right is held, go full power forward
+            } else if (gamepad1.left_bumper) {
+                outtakeMotor.setPower(-0.5); // Only happens if Right is NOT held
+            } else {
+                outtakeMotor.setPower(0.0);  // Stop if nothing is pressed
+            }
 
 
 

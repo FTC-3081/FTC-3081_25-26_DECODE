@@ -217,6 +217,11 @@ public class decode_teleop extends LinearOpMode {
                 outtakeMotor.setPower(0.0);  // Stop if nothing is pressed
             }
 
+            //outtake RPM code
+            //double outtakerpm = outtakeMotor.getVelocity(); // Ticks per second
+            //double cpr = 28.0; // Example for Rev Hex Motor
+            //double rpm = (outtakerpm * 60.0) / cpr;
+
 
 
 

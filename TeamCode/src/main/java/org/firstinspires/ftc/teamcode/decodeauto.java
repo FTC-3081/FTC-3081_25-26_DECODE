@@ -93,13 +93,15 @@ public class decodeauto extends LinearOpMode {
         // Wait for the game to start (driver presses START)
         waitForStart();
 
+        double goTime = .125;
+
         // Step through each leg of the path, ensuring that the OpMode has not been stopped along the way.
 
         // Step 1:  Drive forward for 3 seconds
         //leftDrive.setPower(FORWARD_SPEED);
         //rightDrive.setPower(FORWARD_SPEED);
         runtime.reset();
-        while (opModeIsActive() && (runtime.seconds() < 2.25)) {
+        while (opModeIsActive() && (runtime.seconds() < goTime)) {
             frontLeftDrive.setPower(FORWARD_SPEED);
             backLeftDrive.setPower(FORWARD_SPEED);
             frontRightDrive.setPower(FORWARD_SPEED);
@@ -112,7 +114,7 @@ public class decodeauto extends LinearOpMode {
         //leftDrive.setPower(TURN_SPEED);
        // rightDrive.setPower(-TURN_SPEED);
         runtime.reset();
-        while (opModeIsActive() && (runtime.seconds() < 1.3)) {
+        while (opModeIsActive() && (runtime.seconds() < 0)) {
             telemetry.addData("Path", "Leg 2: %4.1f S Elapsed", runtime.seconds());
             telemetry.update();
         }
@@ -121,7 +123,7 @@ public class decodeauto extends LinearOpMode {
         //leftDrive.setPower(-FORWARD_SPEED);
         //rightDrive.setPower(-FORWARD_SPEED);
         runtime.reset();
-        while (opModeIsActive() && (runtime.seconds() < 1.0)) {
+        while (opModeIsActive() && (runtime.seconds() < 0)) {
             telemetry.addData("Path", "Leg 3: %4.1f S Elapsed", runtime.seconds());
             telemetry.update();
         }

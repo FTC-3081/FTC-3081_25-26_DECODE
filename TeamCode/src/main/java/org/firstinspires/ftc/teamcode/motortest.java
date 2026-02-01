@@ -201,10 +201,14 @@ public class motortest extends LinearOpMode {
             */
 
             // Send calculated power to wheels
-            frontLeftDrive.setPower(frontLeftPower);
-            frontRightDrive.setPower(frontRightPower);
-            backLeftDrive.setPower(backLeftPower);
-            backRightDrive.setPower(backRightPower);
+            frontLeftDrive.setPower(gamepad1.left_stick_x);
+            frontRightDrive.setPower(gamepad1.left_stick_y);
+            backLeftDrive.setPower(gamepad1.right_stick_x);
+            backRightDrive.setPower(gamepad1.right_stick_y);
+            intakeLeft.setPower(gamepad1.left_trigger);
+            intakeRight.setPower(gamepad1.right_trigger);
+            intakeTop.setPower((gamepad1.right_bumper) ? 1.0 : 0.0);
+
 
             //something something ternary operator
 

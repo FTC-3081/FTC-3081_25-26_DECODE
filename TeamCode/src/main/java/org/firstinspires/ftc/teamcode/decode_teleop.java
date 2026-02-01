@@ -34,6 +34,7 @@ import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 /*
@@ -94,9 +95,13 @@ public class decode_teleop extends LinearOpMode {
     private DcMotor intakeLeft = null;
     private DcMotor intakeRight = null;
 
-    private DcMotor outtakeMotor = null;
+    private DcMotorEx outtakeMotor = null;
 
+    boolean lastX = false;
+    boolean toggleActive = false;
 
+    double targetRPM = 3000;
+    double targetTPS = (targetRPM * 28) / 60;
     //goofy goober code
 
 
@@ -112,7 +117,7 @@ public class decode_teleop extends LinearOpMode {
         frontRightDrive = hardwareMap.get(DcMotor.class, "rightFront");
         backRightDrive = hardwareMap.get(DcMotor.class, "rightBack");
 
-        outtakeMotor = hardwareMap.get(DcMotor.class, "intakeTop");
+        outtakeMotor = hardwareMap.get(DcMotorEx.class, "intakeTop");
         intakeLeft = hardwareMap.get(DcMotor.class, "intakeLeft");
         intakeRight = hardwareMap.get(DcMotor.class, "intakeRight");
 
@@ -162,7 +167,7 @@ public class decode_teleop extends LinearOpMode {
             double backLeftPower   = axial - lateral + yaw;
             double backRightPower  = axial + lateral - yaw;
 
-            double intakePower = (gamepad1.right_trigger - (gamepad1.left_trigger * .5));
+            double intakePower = (gamepad1.right_trigger - (gamepad1.left_trigger * .3));
 
 
 
@@ -207,7 +212,7 @@ public class decode_teleop extends LinearOpMode {
             intakeLeft.setPower(intakePower);
             intakeRight.setPower(intakePower);
             //intakeTop.setPower(((gamepad1.right_bumper) ? 1.0 : 0.0) + (gamepad1.left_bumper ? -0.5 : 0.0));
-
+/*
             //Prototype outtake code.
             if (gamepad1.right_bumper) {
                 outtakeMotor.setPower(1.0);  // Priority: If Right is held, go full power forward
@@ -216,11 +221,26 @@ public class decode_teleop extends LinearOpMode {
             } else {
                 outtakeMotor.setPower(0.0);  // Stop if nothing is pressed
             }
+*/
+            if (gamepad1.x && !lastX) {
+                toggleActive = !toggleActive;
+            }
+            lastX = gamepad1.x;
+
+            if (gamepad1.right_bumper) {
+                outtakeMotor.setVelocity(targetTPS);
+            } else if (gamepad1.left_bumper) {
+                outtakeMotor.setPower(-.8 * targetTPS);
+            } else if (toggleActive) {
+                outtakeMotor.setPower(0.8);
+            } else {
+                outtakeMotor.setVelocity(0);  // Off if no toggle and no bumpers
+            }
 
             //outtake RPM code
-            //double outtakerpm = outtakeMotor.getVelocity(); // Ticks per second
-            //double cpr = 28.0; // Example for Rev Hex Motor
-            //double rpm = (outtakerpm * 60.0) / cpr;
+            double outtakerpm = outtakeMotor.getVelocity(); // Ticks per second
+            double cpr = 28.0; // goBILDA 6000
+            double rpm = (outtakerpm * 60.0) / cpr;
 
 
 
@@ -230,7 +250,7 @@ public class decode_teleop extends LinearOpMode {
             telemetry.addData("Status", "Run Time: " + runtime.toString());
             telemetry.addData("Front left/Right", "%4.2f, %4.2f", frontLeftPower, frontRightPower);
             telemetry.addData("Back  left/Right", "%4.2f, %4.2f", backLeftPower, backRightPower);
-            telemetry.addData("Funny Number", 67);
+            telemetry.addData("outtakeRPM", rpm);
             telemetry.addData("intakePower",intakePower);
             telemetry.update();
 

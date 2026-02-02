@@ -30,6 +30,7 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.acmerobotics.dashboard.FtcDashboard;
+import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
@@ -82,6 +83,7 @@ class MultipleTelemetryExampleOpMode extends OpMode {
     // ...
 }
 */
+
 @TeleOp(name="decode teleop", group="Linear OpMode")
 
 public class decode_teleop extends LinearOpMode {
@@ -101,6 +103,8 @@ public class decode_teleop extends LinearOpMode {
     boolean toggleActive = false;
 
     double targetRPM = 3000;
+
+    //targetRPM is pulled from RobotConstants.java FYI
     double targetTPS = (targetRPM * 28) / 60;
     //goofy goober code
 

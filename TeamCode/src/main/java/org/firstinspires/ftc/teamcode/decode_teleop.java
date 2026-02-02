@@ -104,7 +104,7 @@ public class decode_teleop extends LinearOpMode {
 
     double targetRPM = 3000;
 
-    //targetRPM is pulled from RobotConstants.java FYI
+    //targetRPM is pulled from RobotClasses.java FYI
     double targetTPS = (targetRPM * 28) / 60;
     //goofy goober code
 
